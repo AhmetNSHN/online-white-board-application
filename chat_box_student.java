@@ -149,7 +149,7 @@ public class chat_box_student extends JPanel{
 	{
 		try
 		{
-			oos.writeObject("C:"+ message);
+			oos.writeObject("Student"+ message);
 			oos.flush();
 			add_message("Student: "+ message);
 		}
