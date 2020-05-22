@@ -93,6 +93,7 @@ public class chat_box_student extends JPanel{
 			catch(EOFException e)
 			{
 				add_message("SYSTEM: Teacher left the season");
+				setButtonEnabled(false);
 			}
 			catch(IOException e)
 			{
