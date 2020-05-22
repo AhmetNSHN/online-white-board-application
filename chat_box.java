@@ -60,7 +60,7 @@ public class chat_box extends JPanel{
         add(message_box, constraints);
 		
 		send = new JButton("Send");
-		send.setEnabled(true);
+		send.setEnabled(false);
 		constraints.weightx = 0.05;	
 		constraints.gridx = 1;       
         add(send, constraints);
@@ -91,6 +91,7 @@ public class chat_box extends JPanel{
 				{
 					connection = socket.accept();
 					add_message("SYSTEM: student connected");
+					send.setEnabled(true);
 					stream();
 					processconnection();
 				}
