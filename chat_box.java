@@ -97,6 +97,7 @@ public class chat_box extends JPanel{
 				catch(EOFException e)
 				{
 					add_message("SYSTEM: No student left");
+					setButtonEnabled(false);
 				}
 				finally
 				{
