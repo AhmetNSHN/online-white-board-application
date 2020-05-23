@@ -15,6 +15,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -131,7 +132,14 @@ public class chat_box extends JPanel{
 		{
 			try{
 				message = (String) ois.readObject();
+				if(message.equals("NOTIFICATION"))
+				{
+					JOptionPane.showMessageDialog(null,"Student Raising Hand","NOTIFICATION",JOptionPane.WARNING_MESSAGE);
+				}
+				else
+				{
 				add_message(message);
+				}
 			}
 			catch(ClassNotFoundException e)
 			{
