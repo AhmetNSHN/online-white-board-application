@@ -29,6 +29,7 @@ public class chat_box_student extends JPanel{
 	JTextArea message_area;
 	JTextField message_box;
 	JButton send;
+	JButton raise_hand;
 	String IP;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
@@ -47,7 +48,7 @@ public class chat_box_student extends JPanel{
         message_area.setWrapStyleWord(true);
 		add(new JScrollPane(message_area));
 		JScrollPane scrollpane = new JScrollPane(message_area);
-		constraints.gridwidth = 2;
+		constraints.gridwidth = 3;
 		constraints.weightx = 1.0;
 		constraints.weighty = 1.0;		
 		constraints.gridx = 0;
@@ -74,6 +75,18 @@ public class chat_box_student extends JPanel{
 						message_box.setText(" ");						
 					}			
 				});
+		raise_hand = new JButton("Rise Hand");
+		constraints.weightx = 0.05;	
+		constraints.gridx = 2;       
+        add(raise_hand, constraints);
+		raise_hand.addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						rise_hand_request();						
+					}			
+				});
+
 		
 	}
 	
@@ -187,5 +200,32 @@ public class chat_box_student extends JPanel{
 			
 				});
 	}
+	
+	private void rise_hand_request()
+	{
+		try
+		{
+			oos.writeObject("NOTIFICATION");
+			oos.flush();
+		}
+		catch(IOException e)
+		{
+			add_message("please check your internet connection...");
+		}
+	}
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
