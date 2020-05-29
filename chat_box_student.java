@@ -112,6 +112,15 @@ public class chat_box_student extends JPanel{
 			catch(IOException e)
 			{
 				add_message("SYSTEM: Teacher is not connected yet!");
+				try
+				{
+				    Thread.sleep(3000);
+				    connect();
+				}
+				catch(InterruptedException ex)
+				{
+				    Thread.currentThread().interrupt();
+				}
 			}
 			finally
 			{
