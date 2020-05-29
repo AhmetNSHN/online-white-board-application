@@ -12,6 +12,7 @@ import java.io.IOException;
 //import java.rmi.UnknownHostException;
 
 public class TeacherServer {
+	
 
     public static void main(String[] args) throws IOException{
         JFrame Application = new JFrame();
@@ -54,13 +55,3 @@ public class TeacherServer {
 
 }
 
-//constructor with port
-//private Socket socket = null;
-//private DataInputStream input = null;
-//private DataOutputStream out = null;
-//private DataInputStream in = null;
-
-//constructor to put ip address and port
-//public TeacherServer("127.0.0.1", 5001) {
-
-//}
