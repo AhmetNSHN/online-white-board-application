@@ -8,11 +8,16 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.EOFException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -28,6 +33,7 @@ public class chat_box extends JPanel{
 	JTextArea message_area;
 	JTextField message_box;
 	JButton send;
+	JButton Attendance;
 	
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
@@ -60,8 +66,8 @@ public class chat_box extends JPanel{
 		constraints.gridy = 1;       
         add(message_box, constraints);
 		
-		send = new JButton("Send");
-		send.setEnabled(false);
+        send = new JButton("Send");
+		setButtonEnabled(false);
 		constraints.weightx = 0.05;	
 		constraints.gridx = 1;       
         add(send, constraints);
@@ -71,6 +77,31 @@ public class chat_box extends JPanel{
 					public void actionPerformed(ActionEvent e) {
 						send(message_box.getText());
 						message_box.setText(" ");						
+					}			
+				});
+		Attendance = new JButton("Attendance");
+		constraints.weightx = 0.05;	
+		constraints.gridx = 2;       
+        add(Attendance, constraints);
+		Attendance.addActionListener(new ActionListener()
+				{
+			String student_name;
+			
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+						      File myObj = new File("ATTENDANCE.txt");
+						      Scanner myReader = new Scanner(myObj);
+						      while (myReader.hasNextLine()) {
+						        student_name = myReader.nextLine();
+						        System.out.println(student_name);
+						      }
+						      myReader.close();
+						    } catch (FileNotFoundException event) {
+						      System.out.println("An error occurred.");
+						      event.printStackTrace();
+						    }	
+						JOptionPane.showMessageDialog(null, student_name,"ATTENDANCE",JOptionPane.INFORMATION_MESSAGE);
 					}			
 				});
 		
@@ -94,6 +125,40 @@ public class chat_box extends JPanel{
 					add_message("SYSTEM: student connected");
 					send.setEnabled(true);
 					stream();
+					
+					
+					try
+					{
+						String message = " ";
+						message = (String) ois.readObject();
+						try {
+				            File myObj = new File("ATTENDANCE.txt");
+				            if (myObj.createNewFile()) {
+				              System.out.println("File created: " + myObj.getName());
+				            } else {
+				              System.out.println("File already exists.");
+				            }
+				          } catch (IOException e) {
+				            System.out.println("An error occurred.");
+				            e.printStackTrace();
+				          }
+				        try {
+				            FileWriter myWriter = new FileWriter("ATTENDANCE.txt");
+				            myWriter.write(message);
+				            myWriter.close();
+				            
+				          } catch (IOException e) {
+				            System.out.println("Cannot write to file.");
+				            e.printStackTrace();
+				          }
+					
+					}
+					catch(ClassNotFoundException e)
+					{
+						add_message("Can't take the attendance");
+					}
+					
+					
 					processconnection();
 				}
 				catch(EOFException e)
@@ -132,7 +197,36 @@ public class chat_box extends JPanel{
 		{
 			try{
 				message = (String) ois.readObject();
-				if(message.equals("NOTIFICATION"))
+//				if(message.substring(0,11).equals("ATTENDANCE:"))
+//				{
+//					System.out.print(message);
+//					 
+////			        String[] arrOfStr = message.split(":", 1);
+//			
+//			        try {
+//			            File myObj = new File("ATTENDANCE.txt");
+//			            if (myObj.createNewFile()) {
+//			              System.out.println("File created: " + myObj.getName());
+//			            } else {
+//			              System.out.println("File already exists.");
+//			            }
+//			          } catch (IOException e) {
+//			            System.out.println("An error occurred.");
+//			            e.printStackTrace();
+//			          }
+//			        try {
+//			            FileWriter myWriter = new FileWriter("ATTENDANCE.txt");
+//			            myWriter.write(message);
+//			            myWriter.close();
+//			            
+//			          } catch (IOException e) {
+//			            System.out.println("Cannot write to file.");
+//			            e.printStackTrace();
+//			          }
+//			        
+//					
+//				}
+			    if(message.equals("NOTIFICATION"))
 				{
 					JOptionPane.showMessageDialog(null,"Student Raising Hand","NOTIFICATION",JOptionPane.WARNING_MESSAGE);
 				}
@@ -140,8 +234,13 @@ public class chat_box extends JPanel{
 				{
 				add_message(message);
 				}
+		
 			}
 			catch(ClassNotFoundException e)
+			{
+				e.printStackTrace();
+			}
+			catch(StringIndexOutOfBoundsException e)
 			{
 				e.printStackTrace();
 			}
