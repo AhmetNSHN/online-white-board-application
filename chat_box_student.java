@@ -13,10 +13,11 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -90,8 +91,7 @@ public class chat_box_student extends JPanel{
 		
 	}
 	
-	
-	
+		
 	public void connect() //main function of chat box
 	{
 		try
@@ -99,9 +99,10 @@ public class chat_box_student extends JPanel{
 			try
 			{
 				connection = new Socket(InetAddress.getByName(IP),5000);
-				add_message("SYSTEM: you are connected to teacher");
-				setButtonEnabled(true);
+				add_message("SYSTEM: you are connected to teacher");			
 				stream();
+				String student_name =  JOptionPane.showInputDialog("Enter your name");				 				
+				send_student_name(student_name);
 				processconnection();
 			}
 			catch(EOFException e)
@@ -128,14 +129,11 @@ public class chat_box_student extends JPanel{
 				ois.close();
 				connection.close();
 			}
-		}
-		
+		}		
 		catch(IOException e)
 		{
 			e.printStackTrace();
-		}
-		
-		
+		}		
 	}
 	
 	
@@ -224,6 +222,19 @@ public class chat_box_student extends JPanel{
 	}
 
 
+
+   private void send_student_name(String student_name)
+   {
+	   try
+		{
+			oos.writeObject("ATTENDANCE:"+ student_name);
+			oos.flush();
+		}
+		catch(IOException e)
+		{
+			add_message("please check your internet connection...");
+		}
+   }
 }
 
 
