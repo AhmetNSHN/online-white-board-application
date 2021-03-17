@@ -1,4 +1,5 @@
 # online-white-board-application
+Ahmet Naci Sahin & Amr El Shimy
 
 This project is a online white board application where student and teacher can connect together, and teacher share drawings with student.
 
