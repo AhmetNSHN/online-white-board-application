@@ -10,4 +10,10 @@ There are two executables
 
 screenshots provided to show UI
 
+Student:
+
 <img width="1440" alt="screenshot (teacher)" src="https://user-images.githubusercontent.com/64427438/113708596-7a1e7300-96f2-11eb-9c30-29a6b467ebaa.png">
+
+Teacher:
+
+<img width="1440" alt="screenshot (teacher)-2" src="https://user-images.githubusercontent.com/64427438/113708742-a76b2100-96f2-11eb-9bd1-53b4e81bf584.png">
